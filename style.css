@@ -1,3 +1,18 @@
+/* section view port set */
+body{
+  margin: 0;
+}
+section{
+  height: 100vh;
+}
+footer{
+  color: whitesmoke;
+  background-color: #7617df;
+  padding: 50px;
+}
+#phero{
+  color: hotpink;
+}
 /* btn custom color */
 .btn-custom-color{
     border: 0.5px solid lightgrey;

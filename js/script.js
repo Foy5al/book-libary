@@ -4,6 +4,7 @@ const searchBtn = () => {
     const getSearchtxt = document.getElementById('search-box')
     const searchTxt = getSearchtxt.value;
     getDataFromUrl(searchTxt);
+    //clear search value and book result
     getSearchtxt.value = '';
     document.getElementById('resultFound').textContent = '';
 }
@@ -13,72 +14,72 @@ const getDataFromUrl = async searchTxt => {
     const erroMsgContainer = document.getElementById('resultcontaine')
     erroMsgContainer.textContent = ' ';
 
+    //fetch url for geting data
     const url = `https://openlibrary.org/search.json?q=${searchTxt}`
-    console.log(url)
     const response = '';
+    // use try cathc for error handeling
     try {
         const resp = await fetch(url)
-        // console.log(getdata);
         const response = resp;
-        console.log(response, 'this is response')
         const getdata = await response.json()
         if (getdata.numFound !== 0) {
-            console.log('kisu ase')
-
-            //return getdata;
         }
 
         else {
-            console.log('kisu nai')
             erroMsgContainer.innerHTML = `
-            <span class="fs-1 fw-bold"> 😔😔Sorry we didn't have any book in this name '${searchTxt}' </span>
+            <span class="fs-1 fw-bold">Sorry we didn't found any book in this name '${searchTxt}' 😔😔</span>
             `
+            spinnerToggle('none')
         }
         displayData(getdata);
         return;
     }
 
     catch (error) {
-        console.log('dhorchi error', error)
-        erroMsgContainer.innerHTML = '<span class="fs-1 fw-bold">😐😐 404 link not found </span>'
+        erroMsgContainer.innerHTML = '<span class="fs-1 fw-bold">😐😐 404 link not found or any other error occurred pls check the console for error</span>'
+        console.log(error);
     }
 
 }
 
 //show data in display
 const displayData = searchResult => {
-    console.log(searchResult.num_found)
-    console.log(searchResult)
     const numberOfDataFound = searchResult.num_found
     const resultContainer = document.getElementById('resultcontaine')
-    document.getElementById('resultFound').innerText = `Total Data Found: ${numberOfDataFound}`
+
+    //search book counter
+    document.getElementById('resultFound').innerText = `Total Book Found: ${numberOfDataFound}`
+
+    //use fetched data into the site 
     const booksList = searchResult.docs
-
     booksList.forEach(book => {
+        //filter data using common function
         const bookCover = getImg(book.cover_i)
-        const authorsName = getAuthorsName(book.author_name);
-        //const firstPublished = getdata(book.first_publish_year)
+        const authorsName = getdata(book.author_name);
+        const firstPublishedYear = filterData(book.first_publish_year);
+        const publisherName = getdata(book.publisher);
+        const numberOfPages = filterData(book.number_of_pages_median);
 
-        console.log(book);
+        //search result display
         const resultDiv = document.createElement('div')
-        resultDiv.classList = 'card'
+        resultDiv.classList = 'card shadow p-3 mb-5 bg-body rounded'
         resultDiv.style.width = '18rem'
         resultDiv.innerHTML = `
         <img src="${bookCover}"class="card-img-top" height="400px">
             <div class="card-body">
-                <h6 class="card-text">Book Title: ${book.title}</h6>
-                <p>Author:${authorsName} || Publish: ${book?.first_publish_year}</p>
+                <h6 class="card-text"><strong>Book Title:</strong> ${book.title}</h6>
+        <p><strong>Author:</strong> ${authorsName} || <strong>Publish Year:</strong> ${firstPublishedYear}|| <strong>Publisher Name:</strong> ${publisherName} || <strong>Number Of Pages: </strong>${numberOfPages}</p>
             </div>
-     
         `
         resultContainer.appendChild(resultDiv);
+        //loading spineer off
         spinnerToggle('none')
     });
-    //
 
 }
 
-//get image
+//data filter function starts here
+// used for image erro control
 const getImg = imgid => {
     const url = `https://covers.openlibrary.org/b/id/${imgid}-M.jpg`;
     if (imgid !== undefined) {
@@ -87,26 +88,21 @@ const getImg = imgid => {
     else {
         return 'resources/imgnotfound.png'
     }
-    //return image;
 }
 
-//get authors name 
-const getAuthorsName = authors => {
-    let authorsNamelist = '';
-    if (authors !== undefined) {
-        authors.forEach(author => {
-            const data = author + ' ,' + authorsNamelist;
-            authorsNamelist = data;
-        });
+//used for filter undefined data  
+const filterData = getDataforFilter => {
+    //let authorsNamelist = '';
+    if (getDataforFilter !== undefined) {
 
-        return authorsNamelist;
+        return getDataforFilter;
     }
     else {
-        return authorsNamelist = 'Unknown';
+        return 'Unknown';
     }
 }
 
-//common function for get data from array
+//this is a common function used for get data from array
 const getdata = datalist => {
     let arrayData = '';
     if (datalist !== undefined) {
@@ -121,17 +117,8 @@ const getdata = datalist => {
         return arrayData = 'Unknown';
     }
 }
-//book?.first_publish_year
-
-
 
 // spinner function
 const spinnerToggle = (displayStatus) => {
     document.getElementById('spinner-container').style.display = displayStatus;
 }
-/* <div class="card" style="width: 18rem;">
-    <img src=`https://covers.openlibrary.org/b/id/${}-M.jpg` class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
-</div> */
