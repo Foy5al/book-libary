@@ -1,6 +1,6 @@
 // get search value form input box
 const searchBtn = () => {
-    //spinnerToggle('block');
+    spinnerToggle('block');
     const getSearchtxt = document.getElementById('search-box')
     const searchTxt = getSearchtxt.value;
     getDataFromUrl(searchTxt);
@@ -55,7 +55,7 @@ const displayData = searchResult => {
 
     booksList.forEach(book => {
         const bookCover = getImg(book.cover_i)
-        const authorsName = getdata(book.author_name);
+        const authorsName = getAuthorsName(book.author_name);
         //const firstPublished = getdata(book.first_publish_year)
 
         console.log(book);
@@ -65,12 +65,13 @@ const displayData = searchResult => {
         resultDiv.innerHTML = `
         <img src="${bookCover}"class="card-img-top" height="400px">
             <div class="card-body">
-                <p class="card-text">Book Title: ${book.title}</p>
-                <p>Author:${authorsName} || Publish: ${book.first_publish_year}</p>
+                <h6 class="card-text">Book Title: ${book.title}</h6>
+                <p>Author:${authorsName} || Publish: ${book?.first_publish_year}</p>
             </div>
      
         `
         resultContainer.appendChild(resultDiv);
+        spinnerToggle('none')
     });
     //
 
@@ -119,14 +120,14 @@ const getdata = datalist => {
         return arrayData = 'Unknown';
     }
 }
+//book?.first_publish_year
 
-/* 
-//show result counter 
+
 
 // spinner function
-    const spinnerToggle = (displayStatus) => {
+const spinnerToggle = (displayStatus) => {
     document.getElementById('spinner-container').style.display = displayStatus;
-} */
+}
 /* <div class="card" style="width: 18rem;">
     <img src=`https://covers.openlibrary.org/b/id/${}-M.jpg` class="card-img-top" alt="...">
         <div class="card-body">
