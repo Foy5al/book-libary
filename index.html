@@ -10,21 +10,44 @@
     <!-- bootstrap link  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- custom css link -->
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
     <section class="container">
         <!-- inputbox container -->
         <div class="input-group mb-3 mt-5">
-            <input type="text" class="form-control"
+            <input id="search-box" type="text" class="form-control"
                 placeholder="Just enter your desired book name we will do the rest for you"
                 aria-label="Recipient's username" aria-describedby="button-addon2">
 
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search Book</button>
+            <button class="btn btn-custom-color" type="button" onclick="searchBtn()">Search
+                Book</button>
+        </div>
+
+        <!-- spinner -->
+        <div id="spinner-container" class="loader">Loading...
+            <h4>Loading</h4>
         </div>
 
 
-        <h1>https://openlibrary.org/search.json?q=javascript</h1>
+        <!-- <img src="https://covers.openlibrary.org/b/id/undefined-M.jpg"
+            onerror="this.onerror=null;this.src='';"> -->
+
+        <!-- <img src="https://covers.openlibrary.org/b/id/undefined-M.jpg" class="card-img-top"
+            onerror="this.src='resources/imgnotfound.png';" alt="Book Image" height="400px">
+            <img src="foo.jpg" onerror="this.src='error.jpg';this.onerror='';"> -->
+        <!-- resultcontaine -->
+        <!-- total result found -->
+        <h3 id="resultFound"></h3>
+        <div id="resultcontaine" class="text-center d-flex flex-wrap gap-3 justify-content-between">
+            <!-- <h1 id="resultCounter"></h1> -->
+        </div>
+
+
+
     </section>
 
     <!-- script links  -->
