@@ -1,14 +1,16 @@
 /* section view port set */
 body{
   margin: 0;
+  min-height: 100vh;
 }
 section{
-  height: 100vh;
+  min-height: 100vh;
 }
 footer{
   color: whitesmoke;
   background-color: #7617df;
-  padding: 50px;
+  padding: 5rem;
+  margin-top: auto;
 }
 #phero{
   color: hotpink;

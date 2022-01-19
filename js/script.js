@@ -1,7 +1,7 @@
 // get search value form input box
 const searchBtn = () => {
     spinnerToggle('block');
-    const getSearchtxt = document.getElementById('search-box')
+    const getSearchtxt = document.getElementById('searchBox')
     const searchTxt = getSearchtxt.value;
     getDataFromUrl(searchTxt);
     //clear search value and book result
