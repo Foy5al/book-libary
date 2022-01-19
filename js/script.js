@@ -5,6 +5,7 @@ const searchBtn = () => {
     const searchTxt = getSearchtxt.value;
     getDataFromUrl(searchTxt);
     getSearchtxt.value = '';
+    document.getElementById('resultFound').textContent = '';
 }
 
 //get search data from server
